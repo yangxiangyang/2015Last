@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="college" extends="struts-default" >
+		<action name="college*" class="com.baidu.college.action.CollegeAction" method="{1}">
+			<result name="list">/WEB-INF/college/list.jsp</result>
+		</action>
+	</package>
+</struts>
