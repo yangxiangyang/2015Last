@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+ 
+	<bean id="assetdetailAction" class="com.baidu.assetdetail.action.AssetdetailAction" scope="prototype">
+		<property name="assetdetailService" ref="assetdetailService"></property>   
+	</bean>
+	
+	
+	<!-- 简洁service配置 -->
+	<bean id="assetdetailService" class="com.baidu.assetdetail.service.AssetdetailServiceImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property> 
+	</bean>
+	
+	
+	
+</beans>

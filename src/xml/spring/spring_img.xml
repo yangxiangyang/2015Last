@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+ 
+	<bean id="imgAction" class="com.baidu.img.action.ImgAction" scope="prototype">
+		<property name="imgService" ref="imgService"></property>   
+	</bean>
+	
+	
+	<!-- 简洁service配置 -->
+	<bean id="imgService" class="com.baidu.img.service.ImgServiceImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property> 
+	</bean>
+	
+	
+	
+</beans>

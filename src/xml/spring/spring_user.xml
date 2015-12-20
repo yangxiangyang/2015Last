@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+ 
+	<bean id="userAction" class="com.baidu.user.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="groupService" ref="groupService"></property>   
+		<property name="selectDataService" ref="selectDataService"></property>   
+	</bean>
+	
+	<!-- 正常service dao 配置 -->
+	<bean id="userService" class="com.baidu.user.service.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean id="userDao" class="com.baidu.user.dao.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- 类和表的映射关系 -->
+    <class name="com.baidu.dept.bean.Dept" table="t_dept">
+    	<!-- 属性和列名的对应，但因为该数据对应的字段为主键，所以使用id标签 -->
+        <id name="id" type="java.lang.Integer">
+        	<!-- 如果属性名和列名一致，则可以省略列名 -->
+        	<!-- 采用数据库本地的主键生成策略，对于mysql来说为自增的主键生成策略 -->
+            <generator class="sequence">
+            	<param name="sequence">dept_seq</param>
+            </generator>
+        </id>
+        
+        <!-- 属性和字段的对应 -->
+        <property name="name" type="java.lang.String" column="name">
+        </property>
+        <property name="pid" type="java.lang.Integer" column="pid">
+        </property>
+        <property name="firstuser" type="java.lang.String" column="firstuser">
+        </property>
+        <property name="seconduser" type="java.lang.String" column="seconduser">
+        </property>
+        <property name="secretary" type="java.lang.String" column="secretary">
+        </property>
+        
+    </class>
+</hibernate-mapping>
