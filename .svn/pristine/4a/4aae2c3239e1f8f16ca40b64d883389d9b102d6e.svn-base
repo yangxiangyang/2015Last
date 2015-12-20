@@ -1,0 +1,71 @@
+
+BUG1:
+	修改时，回显页面，不修改任何内容，直接修改时修改失败.
+	原因：下拉菜单id,name设置问题
+	
+OA:
+	http://demo.oa8000.com/OAapp/WebObjects/OAapp.woa
+	admin 123456	
+
+SQL:部门设置
+  (1, '总经理', 0 );
+  (2, '办公室', 0 );
+  (3, '行政部', 1 );
+  (4, '信息部', 3 );
+  (5, '人事部', 1 );
+  (6, '资材部', 1 );
+  (7, '财务部', 6 );
+  (8, '采购部', 6 );
+  (9, '营销事业部', 1 );
+  (10, '销售部', 9 );
+  (11, '市场部', 9 );
+  (12, '生产事业部', 1 );
+  (13, '研发部', 12 );
+  (14, '物流部', 12 );
+  (15, '生产部', 12 );
+  (16, '生产一部', 15 );
+  (17, '生产二部', 15 );
+  
+  
+回显：
+	select a.id,a.name, b.pid,b.name pname, a.firstuser,c.realname firstuserName,a.seconduser,d.realname seconduserName,a.secretary,e.realname secretaryName  
+	from t_dept a,t_dept b,t_user c,t_user d,t_user e  
+	where a.pid =b.id and a.firstuser =c.id and a.seconduser =d.id and a.secretary =e.id
+	order by to_number(a.id) desc
+	
+用户树形：
+	--树形用户//id可能重复解决方法 ，需要再截取
+select a.id||'_dept' , a.name , '0' pId,'0' isParent from t_dept a
+union all
+select b.id||'_user' , b.realname name , b.deptid pId,'1' isParent from t_user b
+	
+日期格式转换：
+		function getDate(value,row,index){
+			var curDate =new Date(value.time);
+			return curDate.getFullYear()+"-"+(curDate.getMonth()+1)+"-"+curDate.getDate();
+		}
+		
+
+资产管理：
+1、字段设计：资产编号，资产类型，购买日期，负责人，价格，生产厂家，状态（在用，报废，报修，丢失，停用），备注，图片（多个图片）。
+	资产编号：程序动态生成（课桌如kz20140320）首字母+日期戳
+	资产类型：网线，插排等（单独建类型表）
+	负责人：用户表（新增时默认展示当前用户）
+	价格：类型为整型
+	生产厂家：选择不同类型显示不同生产厂家（联动效果，新建厂家表）
+	图片：新建图片表
+	新增：资产入库
+	借出：资产借调
+2.资产报修   点击资产保修按钮，弹出确认提示是否要报修，将数据库状态字段改成报修
+
+---表结构
+	资产表
+	类型表
+	厂家表（与类型联动）
+	图片表（多对一）
+	配置明细表（多对一）
+	用户表（一对多）
+
+文件上传 form表单嵌套 在资产添加form中出错
+
+

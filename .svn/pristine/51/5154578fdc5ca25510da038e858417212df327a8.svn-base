@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+ 
+	<bean id="assetAction" class="com.baidu.asset.action.AssetAction" scope="prototype">
+		<property name="assetService" ref="assetService"></property>   
+		<property name="selectDataService" ref="selectDataService"></property>
+		<property name="assetdetailService" ref="assetdetailService"></property>
+		<property name="imgService" ref="imgService"></property>
+	</bean>
+	
+	
+	<!-- 简洁service配置 -->
+	<bean id="assetService" class="com.baidu.asset.service.AssetServiceImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property> 
+	</bean>
+	<bean id="assetdetailService" class="com.baidu.assetdetail.service.AssetdetailServiceImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property> 
+	</bean>
+	<bean id="imgService" class="com.baidu.img.service.ImgServiceImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property> 
+	</bean>
+	
+	
+</beans>

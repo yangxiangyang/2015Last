@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="dept" extends="struts-default" >
+		<action name="dept*" class="com.baidu.dept.action.DeptAction" method="{1}">
+			<result name="list">/WEB-INF/dept/dept_list.jsp</result>
+			<result name="index">/index.jsp</result>
+			<result name="success">/success.jsp</result>
+			<result name="error">/error.jsp</result>
+			<result name="deptTreePage">/WEB-INF/dept/dept_tree.jsp</result>
+			<result name="addPage">/WEB-INF/dept/dept_add.jsp</result>
+			<result name="updatePage">/WEB-INF/dept/dept_update.jsp</result>
+		</action>
+	</package>
+</struts>

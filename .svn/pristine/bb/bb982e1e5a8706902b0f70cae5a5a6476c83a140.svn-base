@@ -1,0 +1,117 @@
+package com.baidu.assetdetail.action;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.baidu.asset.service.AssetService;
+import com.baidu.assetdetail.bean.Assetdetail;
+import com.baidu.assetdetail.service.AssetdetailService;
+import com.baidu.util.PageView;
+import com.baidu.util.Request;
+import com.baidu.util.Response;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class AssetdetailAction extends ActionSupport {
+	private Assetdetail assetdetail;
+	private Assetdetail[] assetdetails;
+	private AssetdetailService assetdetailService;
+	private AssetService assetService;
+	
+	 
+	public Assetdetail getAssetdetail() {
+		return assetdetail;
+	}
+
+	public void setAssetdetail(Assetdetail assetdetail) {
+		this.assetdetail = assetdetail;
+	}
+
+	public AssetdetailService getAssetdetailService() {
+		return assetdetailService;
+	}
+
+	public void setAssetdetailService(AssetdetailService assetdetailService) {
+		this.assetdetailService = assetdetailService;
+	}
+
+	/**
+	 * 批量添加
+	 * @throws Exception
+	 */
+	public void addDetail() throws Exception{
+		String string = Request.getParameter("details");
+		String[] trs = string.split(";");
+		for (String tr : trs) {
+			String[] td = tr.split(",");
+			assetdetail=new Assetdetail();
+			assetdetail.setName(td[0]);
+			assetdetail.setModel(td[1]);
+			assetdetail.setNum(td[2]);
+			assetdetail.setContent(td[3]);
+			assetdetailService.save(assetdetail);
+		}
+		Response.write("detailok");
+	}
+	
+	
+	public void listAll(){
+		List<Assetdetail> assetdetails =	assetdetailService.findAll();
+		Response.write(JSONArray.fromObject(assetdetails).toString());
+	}
+	
+	
+	public String list() throws Exception{
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		PageView<Assetdetail> pageView = new PageView<Assetdetail>(10, currentPage);
+		StringBuffer hql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		hql.append(" 1=1 ");
+		String startDate = request.getParameter("startDate");
+		try {
+			if (startDate != null && !startDate.equals("")) {
+				hql.append(" and o.applyTime >=?");
+				params.add(startDate);
+				request.setAttribute("startDate", startDate);
+			}
+			String endDate = request.getParameter("endDate");
+			if (endDate != null && !endDate.equals("")) {
+				hql.append(" and o.applyTime <=?");
+				params.add(endDate);
+				request.setAttribute("endDate", endDate);
+			}
+			String applyNode = request.getParameter("applynode");
+			if (applyNode != null && !applyNode.equals("")) {
+				hql.append(" and o.applyNode = " + applyNode);
+				request.setAttribute("applyNode", applyNode);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("applyTime", "desc");
+		pageView.setQueryResult(assetdetailService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(),hql.toString(), params.toArray(), orderby));
+		request.setAttribute("pageView", pageView);
+		
+		return "list";
+	}
+
+	public Assetdetail[] getAssetdetails() {
+		return assetdetails;
+	}
+
+	public void setAssetdetails(Assetdetail[] assetdetails) {
+		this.assetdetails = assetdetails;
+	}
+
+	
+
+}
